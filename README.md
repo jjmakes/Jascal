@@ -2,6 +2,19 @@
 
 A small programming language with syntax similar to Pascal. A lexical analyzer extracts tokens and are interpreted with a recursive-descent parser.
 
+## Instructions
+
+The language requires a C++ compiler. Examples here will use g++.
+
+To compile, run:
+```
+g++ lex.cpp parseInt.cpp jascal.cpp -o main.exe
+```
+To run a file, pass its name as a parameter for the compiled executable:
+```
+./main.exe ./tests/testprog14
+```
+
 **Sample Program:**
 
 ```
@@ -33,6 +46,7 @@ END
 **Output:**
 
 ![output](https://github.com/jjmakely/pa3/blob/master/img/test14output.png)
+
 
 ## EBNF Grammar Rules
 1. Prog ::= PROGRAM IDENT; DeclBlock ProgBody
