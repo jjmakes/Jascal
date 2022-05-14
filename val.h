@@ -67,24 +67,233 @@ public:
 	}
 	
 	
-    // add op to this
-    Value operator+(const Value& op) const;
+    //add op to this
+    Value operator+(const Value& op) const {
+		Value err;
+		if (this->IsInt()) {
+			if (op.IsInt()) {
+				Value v(this->GetInt() + op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetInt() + op.GetReal());
+				return v;
+			}
+		}
+		else if (this->IsReal()) {
+			if (op.IsInt()) {
+				Value v(this->GetReal() + op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetReal() + op.GetReal());
+				return v;
+			}
+
+		}
+		else if (this->IsString()) {
+			if (op.IsString()) {
+				Value v(this->GetString() + op.GetString());
+				return v;
+			}
+		}
+		
+		return err;
+	}
     
     // subtract op from this
-    Value operator-(const Value& op) const;
-    
+    Value operator-(const Value& op) const {
+		Value err;
+		if (this->IsInt()) {
+			if (op.IsInt()) {
+				Value v(this->GetInt() - op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetInt() - op.GetReal());
+				return v;
+			}
+		}
+		else if (this->IsReal()) {
+			if (op.IsInt()) {
+				Value v(this->GetReal() - op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetReal() - op.GetReal());
+				return v;
+			}
+
+		}
+		// else if (this->IsString()) {
+		// 	if (op.IsString()) {
+		// 		Value v(this->GetString() - op.GetString());
+		// 		return v;
+		// 	}
+		// }
+		
+		return err;
+	}
     // multiply this by op
-    Value operator*(const Value& op) const;
+    Value operator*(const Value& op) const {
+		Value err;
+		if (this->IsInt()) {
+			if (op.IsInt()) {
+				Value v(this->GetInt() * op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetInt() * op.GetReal());
+				return v;
+			}
+		}
+		else if (this->IsReal()) {
+			if (op.IsInt()) {
+				Value v(this->GetReal() * op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetReal() * op.GetReal());
+				return v;
+			}
+		}
+		
+		return err;
+	}
+    
     
     // divide this by op
-    Value operator/(const Value& op) const;
+    Value operator/(const Value& op) const {
+		Value err;
+		if (this->IsInt()) {
+			if (op.IsInt()) {
+				Value v(this->GetInt() / op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetInt() / op.GetReal());
+				return v;
+			}
+		}
+		else if (this->IsReal()) {
+			if (op.IsInt()) {
+				Value v(this->GetReal() / op.GetInt());
+				return v;
+			}
+			else if (op.IsReal()) {
+				Value v(this->GetReal() / op.GetReal());
+				return v;
+			}
+		}
+		
+		return err;
+	}
     
-    Value operator==(const Value& op) const;
+    Value operator==(const Value& op) const {
+		Value err;
+		if ((this->GetType() == op.GetType()) && !(this->IsErr()) && !(op.IsErr())) {
+			if (this->IsInt()) {
+				Value v(this->GetInt() == op.GetInt());
+				return v;
+			}
+			if (this->IsBool()) {
+				Value v(this->GetBool() == op.GetBool());
+				return v;
+			}
+			if (this->IsReal()) {
+				Value v(this->GetReal() == op.GetReal());
+				return v;
+			}
+			if (this->IsString()) {
+				Value v(this->GetString() == op.GetString());
+				return v;
+			}
+		}
 
-	Value operator>(const Value& op) const;
+
+		if (this->IsInt() && op.IsReal()) {
+			Value v(this->GetInt() == op.GetReal());
+			return v;
+		}
+
+		if (this->IsReal() && op.IsInt()) {
+			Value v(this->GetReal() == op.GetInt());
+			return v;
+		}
+		
+		return err;
+	}
+    
+
+	Value operator>(const Value& op) const {
+		Value err;
+		if ((this->GetType() == op.GetType()) && !(this->IsErr()) && !(op.IsErr())) {
+			if (this->IsInt()) {
+				Value v(this->GetInt() > op.GetInt());
+				return v;
+			}
+			if (this->IsBool()) {
+				Value v(this->GetBool() > op.GetBool());
+				return v;
+			}
+			if (this->IsReal()) {
+				Value v(this->GetReal() > op.GetReal());
+				return v;
+			}
+			if (this->IsString()) {
+				Value v(this->GetString() > op.GetString());
+				return v;
+			}
+		}
+
+
+		if (this->IsInt() && op.IsReal()) {
+			Value v(this->GetInt() > op.GetReal());
+			return v;
+		}
+
+		if (this->IsReal() && op.IsInt()) {
+			Value v(this->GetReal() > op.GetInt());
+			return v;
+		}
+		
+		return err;
+	}
 	
-	Value operator<(const Value& op) const;
-	
+	Value operator<(const Value& op) const {
+		Value err;
+		if ((this->GetType() == op.GetType()) && !(this->IsErr()) && !(op.IsErr())) {
+			if (this->IsInt()) {
+				Value v(this->GetInt() < op.GetInt());
+				return v;
+			}
+			if (this->IsBool()) {
+				Value v(this->GetBool() < op.GetBool());
+				return v;
+			}
+			if (this->IsReal()) {
+				Value v(this->GetReal() < op.GetReal());
+				return v;
+			}
+			if (this->IsString()) {
+				Value v(this->GetString() < op.GetString());
+				return v;
+			}
+		}
+
+
+		if (this->IsInt() && op.IsReal()) {
+			Value v(this->GetInt() < op.GetReal());
+			return v;
+		}
+
+		if (this->IsReal() && op.IsInt()) {
+			Value v(this->GetReal() < op.GetInt());
+			return v;
+		}
+		
+		return err;
+	}
 	    
     friend ostream& operator<<(ostream& out, const Value& op) {
         if( op.IsInt() ) out << op.Itemp;
