@@ -2,9 +2,37 @@
 
 A small programming language with syntax similar to Pascal. A lexical analyzer extracts tokens and are interpreted with a recursive-descent parser.
 
-Sample Program:
+**Sample Program:**
 
-Output:
+```
+PROGRAM circle;
+	(*Clean Program*)
+VAR
+	(*Variable declarations*)
+	r, a, p, b : REAL; 
+	i, j, sum : INTEGER;
+	str1, str2: STRING;	
+BEGIN
+	i := 8;
+	p := 6;
+	a := 0;
+	sum := 0;
+	str1 := 'Hello World!';
+	j := -3;
+	IF ( p > 5) THEN
+	  	a := (3.14) + j * - p
+	ELSE
+		IF (p = 0 ) THEN str1 := 'Hello';
+		
+	     
+	(*Display the results*)
+	WRITELN  ('The output results are: ' , p, ' ', str1, ' ', a, ' ', i, ' ', j);
+END
+```
+
+**Output:**
+
+![output](https://github.com/jjmakely/pa3/blob/master/img/test14output.png)
 
 ## EBNF Grammar Rules
 1. Prog ::= PROGRAM IDENT; DeclBlock ProgBody
@@ -26,6 +54,7 @@ Output:
 ## Language Description
 - The language consists of types: **INTEGER**, **REAL**, and **STRING**.
 - Precedence rules:
+
 | Highest |
 | ------------- |
 | Unary +, unary - |
@@ -69,8 +98,7 @@ Comments may overlap one line.
 ### Reserved Words
 Program, end, beign, writeln, if, integer, real, string, else, var
 
-## Recursive-Descent Parser
+## Recursive-Descent Parser & Interpreter
 The parser includes one function per fule or nonterminal. Each function recognizes the right hand side of the rule. All recursive-descent functions take a reference to an input stream and line number, and return a Boolean value.
 
-## Interpreter
 The interpreter builds information of variables and types in a map container for all the defined variables. It evaluates expressions and determines their values and types. A map container keeps a record of the defined variables in the parsed program.
