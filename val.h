@@ -125,13 +125,6 @@ public:
 			}
 
 		}
-		// else if (this->IsString()) {
-		// 	if (op.IsString()) {
-		// 		Value v(this->GetString() - op.GetString());
-		// 		return v;
-		// 	}
-		// }
-		
 		return err;
 	}
     // multiply this by op

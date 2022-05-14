@@ -1,11 +1,3 @@
-/* Programming Assignment 3
- * 
- * main.cpp
- *
- * CS280 - Spring 2022
- * parser and interpreter testing program
- */
-
 #include <iostream>
 #include <fstream>
 

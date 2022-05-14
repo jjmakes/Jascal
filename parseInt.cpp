@@ -1,14 +1,8 @@
-/* Implementation of PLSL Interpreter
- * parseInt.cpp
- * Programming Assignment 3
- * Spring 2022
-*/
-
 #include <vector>
 #include <string>
 #include "parseInt.h"
 #include "val.h"
-//#include "lex.cpp"
+
 using namespace std;
 map<string, bool> defVar;
 map<string, Token> SymTable;
@@ -90,7 +84,6 @@ void printSyms() {
 	return;
 }
 
-//bool IdentList(istream& in, int& line, vector<string> &IdList);
 //IdList:= IDENT {,IDENT}
 bool IdentList(istream& in, int& line, vector<string> &IdList) {
 	bool status = false;
@@ -99,7 +92,6 @@ bool IdentList(istream& in, int& line, vector<string> &IdList) {
 	LexItem tok = Parser::GetNextToken(in, line);
 	if(tok == IDENT)
 	{
-		//set IDENT lexeme to the type tok value
 		identstr = tok.GetLexeme();
 		IdList.push_back(identstr);
 		if (!(defVar.find(identstr)->second))
@@ -183,7 +175,6 @@ bool LogicExpr(istream& in, int& line, Value & retVal)
 		}
 		if(retVal.IsErr()){
 			ParseError(line, "Run-Time Error-Illegal Mixed Type Operands for a Logic Expression");
-			//cout << "(" << tok.GetLexeme() << ")" << endl;		
 			return false;
 		}
 		return true;
@@ -324,7 +315,6 @@ bool Term(istream& in, int& line, Value & retVal) {
 			retVal = retVal * val2;
 			if(retVal.IsErr()){
 				ParseError(line, "Illegal multiplication operation.");
-				//cout << "(" << tok.GetLexeme() << ")" << endl;		
 				return false;
 			}
 		}
@@ -360,7 +350,6 @@ bool Term(istream& in, int& line, Value & retVal) {
 //Expr:= Term {(+|-) Term}
 bool Expr(istream& in, int& line, Value & retVal) {
 	Value val1, val2;
-	//cout << "in Expr" << endl;
 	bool t1 = Term(in, line, val1);
 	LexItem tok;
 	if( !t1 ) {
@@ -390,7 +379,6 @@ bool Expr(istream& in, int& line, Value & retVal) {
 			if(retVal.IsErr())
 			{
 				ParseError(line, "Illegal addition operation.");
-				//cout << "(" << tok.GetLexeme() << ")" << endl;		
 				return false;
 			}
 		}
@@ -439,22 +427,9 @@ bool Prog(istream& in, int& line)
 					f2 = ProgBody(in, line);
 					if(!f2)
 					{
-						//cout << "Variables:" << endl;
-						//printVars();
-						//cout << "Symbols:" << endl;
-						//printSyms();
-						//cout << "TempVars:" << endl;
-						//printTemps();
-						//ParseError(line, "Incorrect Program Body.");
 						return false;
 					}
-					//cout << "Variables:" << endl;
-					//printVars();
-					//cout << "Symbols:" << endl;
-					//printSyms();
-					//cout << "TempVars:" << endl;
-					//printTemps();
-					return true;//Successful Parsing is completed
+					return true; //Successful Parsing is completed
 				}
 				else
 				{
@@ -464,7 +439,6 @@ bool Prog(istream& in, int& line)
 			}
 			else
 			{
-				//Parser::PushBackToken(tok);
 				ParseError(line-1, "Missing Semicolon.");
 				return false;
 			}
@@ -532,7 +506,6 @@ bool ProgBody(istream& in, int& line){
 bool DeclBlock(istream& in, int& line) {
 	bool status = false;
 	LexItem tok;
-	//cout << "in Decl" << endl;
 	LexItem t = Parser::GetNextToken(in, line);
 	if(t == VAR)
 	{
@@ -575,9 +548,6 @@ bool DeclStmt(istream& in, int& line)
 	LexItem t;
 	vector<string> IdList;	
 	bool status = IdentList(in, line, IdList);
-	
-	//for (string i: IdList)
-	//	cout << i << ' ';
 
 	if (!status)
 	{
@@ -612,7 +582,6 @@ bool DeclStmt(istream& in, int& line)
 //WriteStmt:= wi, ExpreList 
 bool WriteLnStmt(istream& in, int& line) {
 	LexItem t;
-	//cout << "in WriteStmt" << endl;
 	ValQue = new queue<Value>;
 	t = Parser::GetNextToken(in, line);
 	if( t != LPAREN ) {
@@ -633,10 +602,8 @@ bool WriteLnStmt(istream& in, int& line) {
 		
 		ParseError(line, "Missing Right Parenthesis");
 		return false;
-	}
+	}	
 	
-	
-	//Evaluate: print out the list of expressions' values
 	while (!(*ValQue).empty())
 	{
 		Value nextVal = (*ValQue).front();
@@ -649,7 +616,6 @@ bool WriteLnStmt(istream& in, int& line) {
 }//End of WriteLnStmt
 	
 
-//Stmt is either a WriteLnStmt, ForepeatStmt, IfStmt, or AssigStmt
 //Stmt = AssigStmt | IfStmt | WriteStmt | ForStmt 
 bool Stmt(istream& in, int& line) {
 	bool status;
@@ -681,35 +647,6 @@ bool Stmt(istream& in, int& line) {
 	return status;
 }//End of Stmt
 
-/*
-//WriteStmt:= wi, ExpreList 
-bool WriteLnStmt(istream& in, int& line) {
-	LexItem t;
-		
-	t = Parser::GetNextToken(in, line);
-	if( t != LPAREN ) {
-		
-		ParseError(line, "Missing Left Parenthesis");
-		return false;
-	}
-	
-	bool ex = ExprList(in, line);
-	
-	if( !ex ) {
-		ParseError(line, "Missing expression after WriteLn");
-		return false;
-	}
-	
-	t = Parser::GetNextToken(in, line);
-	if(t != RPAREN ) {
-		
-		ParseError(line, "Missing Right Parenthesis");
-		return false;
-	}
-	
-	return ex;
-}
-*/
 
 //IfStmt:= if (Expr) then Stm} [Else Stmt]
 bool IfStmt(istream& in, int& line) {
@@ -737,7 +674,6 @@ bool IfStmt(istream& in, int& line) {
 		ParseError(line, "Missing Right Parenthesis");
 		return false;
 	}
-	//If V is true run the code!
 
 	t = Parser::GetNextToken(in, line);
 	if(t != THEN)
@@ -787,7 +723,6 @@ bool IfStmt(istream& in, int& line) {
 			ParseError(line, "Missing Statement for If-Stmt Else-Part");
 			return false;
 		}
-		//cout << "in IFStmt status of Stmt true" << endl;
 		return true;
 	}
 		
@@ -833,7 +768,6 @@ bool AssignStmt(istream& in, int& line) {
 						return false;
 					}
 					break;
-					//check all toks and use value.isint n shiz
                 default:
                     break;
 			}
@@ -905,7 +839,6 @@ bool ExprList(istream& in, int& line) {
 //Var:= ident
 bool Var(istream& in, int& line, LexItem & idTok)
 {
-	//called only from the AssignStmt function
 	string identstr = idTok.GetLexeme();;
 	
 	if (idTok == IDENT){
@@ -923,5 +856,3 @@ bool Var(istream& in, int& line, LexItem & idTok)
 	}
 	return false;
 }//End of Var
-
-

@@ -1,9 +1,3 @@
-/*
- * lex.cpp
- *
- * CS280 - Spring 2022
- */
-
 #include <cctype>
 #include <map>
 
